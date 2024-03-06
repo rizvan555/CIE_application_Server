@@ -4,6 +4,7 @@ package com.rizvankarimov.cie_app.service;
 import com.rizvankarimov.cie_app.entity.My_Items;
 import com.rizvankarimov.cie_app.entity.Role;
 import com.rizvankarimov.cie_app.entity.User;
+import com.rizvankarimov.cie_app.entity.User_Items;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public interface UserItems {
 
     @Transactional
     void addUserServices(UserItems userItems);
+
+    void addUserServices(User_Items userItems);
 
     User saveUser(User user);
 

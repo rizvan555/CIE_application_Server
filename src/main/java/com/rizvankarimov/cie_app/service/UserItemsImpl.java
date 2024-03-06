@@ -1,12 +1,12 @@
 package com.rizvankarimov.cie_app.service;
 
-import com.rizvankarimov.appointment_app.entity.MyServices;
-import com.rizvankarimov.appointment_app.entity.Role;
-import com.rizvankarimov.appointment_app.entity.User;
-import com.rizvankarimov.appointment_app.entity.UserServices;
-import com.rizvankarimov.appointment_app.repository.ServiceRepository;
-import com.rizvankarimov.appointment_app.repository.UserRepository;
-import com.rizvankarimov.appointment_app.repository.UserServiceRepository;
+import com.rizvankarimov.cie_app.entity.My_Items;
+import com.rizvankarimov.cie_app.entity.Role;
+import com.rizvankarimov.cie_app.entity.User;
+import com.rizvankarimov.cie_app.entity.User_Items;
+import com.rizvankarimov.cie_app.repository.ServiceRepository;
+import com.rizvankarimov.cie_app.repository.UserRepository;
+import com.rizvankarimov.cie_app.repository.UserServiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,13 +41,18 @@ public class UserItemsImpl implements UserItems
     }
     @Override
     @Transactional
-    public void addService(MyServices myServices) {
-        serviceRepository.save(myServices);
+    public void addService(My_Items myItems) {
+        serviceRepository.save(myItems);
     }
 
     @Override
-    public void addUserServices(UserServices userServices) {
-        userServiceRepository.save(userServices);
+    public void addUserServices(UserItems userItems) {
+
+    }
+
+    @Override
+    public void addUserServices(User_Items userItems) {
+        userServiceRepository.save(userItems);
     }
 
     @Override
@@ -90,12 +95,12 @@ public class UserItemsImpl implements UserItems
     }
 
     @Override
-    public List<MyServices> getAllServices() {
+    public List<My_Items> getAllServices() {
         return serviceRepository.findAll();
     }
 
     @Override
-    public MyServices getServiceById(Long id) {
+    public My_Items getServiceById(Long id) {
         return serviceRepository.findById(id).get();
     }
 

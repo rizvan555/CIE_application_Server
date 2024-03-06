@@ -6,7 +6,6 @@ import com.rizvankarimov.cie_app.repository.JwtRefreshTokenRepository;
 import com.rizvankarimov.cie_app.repository.UserRepository;
 import com.rizvankarimov.cie_app.security.jwt.JwtProvider;
 import com.rizvankarimov.cie_app.utils.SecurityUtils;
-import com.sun.security.auth.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
+import com.rizvankarimov.cie_app.security.UserPrincipal;
+
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -39,20 +42,20 @@ public class JwtRefreshTokenServiceImpl implements JwtRefreshTokenService
 
         return jwtRefreshTokenRepository.save(jwtRefreshToken);
     }
-
+    
     @Override
-    public User generateAccessTokenFromRefreshToken(String refreshTokenId)
-    {
-        JwtRefreshToken jwtRefreshToken = jwtRefreshTokenRepository.findById(refreshTokenId).orElseThrow();
+    public User generateAccessTokenFromRefreshToken(String refreshTokenId) {
+        JwtRefreshToken jwtRefreshToken = jwtRefreshTokenRepository.findById(refreshTokenId)
+                .orElseThrow(() -> new RuntimeException("JWT-Auffrischungstoken ist ungültig."));
 
-        if (jwtRefreshToken.getExpirationDate().isBefore(LocalDateTime.now()))
-        {
-            throw new RuntimeException("JWT refresh token is not valid.");
+        if (jwtRefreshToken.getExpirationDate().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("JWT-Auffrischungstoken ist nicht gültig.");
         }
 
-        User user = userRepository.findById(jwtRefreshToken.getUserId()).orElseThrow();
+        User user = userRepository.findById(jwtRefreshToken.getUserId())
+                .orElseThrow(() -> new RuntimeException("Benutzer nicht gefunden."));
 
-       UserPrincipal userPrincipal = UserPrincipal.builder()
+        UserPrincipal userPrincipal = UserPrincipal.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
@@ -66,4 +69,5 @@ public class JwtRefreshTokenServiceImpl implements JwtRefreshTokenService
 
         return user;
     }
+
 }
