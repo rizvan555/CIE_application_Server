@@ -1,5 +1,6 @@
 package com.rizvankarimov.cie_app.controller;
 
+import com.rizvankarimov.cie_app.entity.Company;
 import com.rizvankarimov.cie_app.entity.User;
 import com.rizvankarimov.cie_app.security.jwt.JwtProvider;
 import com.rizvankarimov.cie_app.service.AuthenticationService;
@@ -27,9 +28,22 @@ public class AuthenticationController {
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
+    @PostMapping("register_companies")
+    public ResponseEntity<?> registerCompanies(@RequestBody Company company) {
+        if (userService.findByUsername(company.getUsername()).isPresent()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(userService.saveCompany(company), HttpStatus.CREATED);
+    }
+
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody User user) {
         return new ResponseEntity<>(authenticationService.signInAndReturnJWT(user), HttpStatus.OK);
+    }
+
+    @PostMapping("login_companies")
+    public ResponseEntity<?> loginCompanies(@RequestBody Company company) {
+        return new ResponseEntity<>(authenticationService.signInAndReturnJWT(company), HttpStatus.OK);
     }
 
     @PostMapping("refresh-token")

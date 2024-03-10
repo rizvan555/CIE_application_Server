@@ -1,5 +1,6 @@
 package com.rizvankarimov.cie_app.security.jwt;
 
+import com.rizvankarimov.cie_app.security.CompanyPrincipal;
 import com.rizvankarimov.cie_app.security.UserPrincipal;
 import com.rizvankarimov.cie_app.utils.SecurityUtils;
 import io.jsonwebtoken.*;
@@ -46,6 +47,10 @@ public class JwtProviderImpl implements JwtProvider {
                 .compact();
     }
 
+    @Override
+    public String generateTokenCompany(CompanyPrincipal auth) {
+        return null;
+    }
     @Override
     public String resolveToken(HttpServletRequest request) {
         return null;

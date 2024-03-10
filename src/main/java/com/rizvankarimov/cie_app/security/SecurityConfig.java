@@ -43,7 +43,11 @@ public class SecurityConfig
         http.cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .formLogin(form -> form.loginPage("/login"));
+                .formLogin(form -> form
+                        .loginPage("/login"))
+                .formLogin(form->form
+                        .loginPage("/login_companies"));
+
 
         http.authorizeHttpRequests(auth ->
                         auth

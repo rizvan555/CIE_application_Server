@@ -1,10 +1,7 @@
 package com.rizvankarimov.cie_app.service;
 
 
-import com.rizvankarimov.cie_app.entity.My_Items;
-import com.rizvankarimov.cie_app.entity.Role;
-import com.rizvankarimov.cie_app.entity.User;
-import com.rizvankarimov.cie_app.entity.User_Items;
+import com.rizvankarimov.cie_app.entity.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -24,6 +21,8 @@ public interface UserItems {
     void addUserServices(User_Items userItems);
 
     User saveUser(User user);
+
+    Company saveCompany(Company company);
 
     void updateUser(User user);
 

@@ -1,9 +1,7 @@
 package com.rizvankarimov.cie_app.service;
 
-import com.rizvankarimov.cie_app.entity.My_Items;
-import com.rizvankarimov.cie_app.entity.Role;
-import com.rizvankarimov.cie_app.entity.User;
-import com.rizvankarimov.cie_app.entity.User_Items;
+import com.rizvankarimov.cie_app.entity.*;
+import com.rizvankarimov.cie_app.repository.CompanyRepository;
 import com.rizvankarimov.cie_app.repository.ServiceRepository;
 import com.rizvankarimov.cie_app.repository.UserRepository;
 import com.rizvankarimov.cie_app.repository.UserServiceRepository;
@@ -23,6 +21,8 @@ public class UserItemsImpl implements UserItems
     private final ServiceRepository serviceRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserServiceRepository userServiceRepository;
+    private final CompanyRepository companyRepository;
+
 
 
     public void createAdminUser() {
@@ -66,6 +66,14 @@ public class UserItemsImpl implements UserItems
     }
 
     @Override
+    public Company saveCompany(Company company) {
+        company.setPassword(passwordEncoder.encode(company.getPassword()));
+        company.setCreateTime(LocalDateTime.now());
+
+        return companyRepository.save(company);
+    }
+
+    @Override
     public void updateUser(User user) {
         userRepository.save(user);
     }
@@ -75,6 +83,7 @@ public class UserItemsImpl implements UserItems
     {
         return userRepository.findByUsername(username);
     }
+
 
     @Override
     @Transactional
