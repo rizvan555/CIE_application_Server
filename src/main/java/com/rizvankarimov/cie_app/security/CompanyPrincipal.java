@@ -1,7 +1,6 @@
 package com.rizvankarimov.cie_app.security;
 
 import com.rizvankarimov.cie_app.entity.Company;
-import com.rizvankarimov.cie_app.entity.User;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

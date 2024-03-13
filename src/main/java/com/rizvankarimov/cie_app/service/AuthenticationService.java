@@ -11,5 +11,7 @@ public interface AuthenticationService
 
     Company signInAndReturnJWT(Company signInRequest);
 
+    Object signInAndReturnJWT(Object signInRequest);
+
     Object findUserById(long id);
 }

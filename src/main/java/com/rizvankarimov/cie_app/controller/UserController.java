@@ -46,12 +46,6 @@ public class UserController
         return ResponseEntity.ok(allUsers);
     }
 
-//    @GetMapping("authUser")
-//    public ResponseEntity<User> getAuthenticatedUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
-//        Optional<User> user = userService.findByUsername(userPrincipal.getUsername());
-//        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null));
-//    }
-
     @GetMapping("authUser")
     public ResponseEntity<User> getAuthenticatedUser() {
         //Burada istifadeci adi ve sifresi ile gelen isteklerde istifadeci adini ve sifresini veritabaninda axtarir ve qaytarir

@@ -10,13 +10,14 @@ import java.util.Optional;
 
 public interface UserItems {
 
-    void addService();
-
     @Transactional
-    void addService(My_Items myItems);
+    void addService(Products myItems);
 
     @Transactional
     void addUserServices(UserItems userItems);
+
+    @Transactional
+    void addProducts(Products products);
 
     void addUserServices(User_Items userItems);
 
@@ -36,9 +37,9 @@ public interface UserItems {
 
     User findUserById(Long id);
 
-    List<My_Items> getAllServices();
+    List<Products> getAllProducts();
 
-    My_Items getServiceById(Long id);
+    Products getProductById(Long id);
 
-    Object updateService(Long id);
+    Object updateProducts(Long id);
 }

@@ -2,7 +2,7 @@ package com.rizvankarimov.cie_app.service;
 
 import com.rizvankarimov.cie_app.entity.*;
 import com.rizvankarimov.cie_app.repository.CompanyRepository;
-import com.rizvankarimov.cie_app.repository.ServiceRepository;
+import com.rizvankarimov.cie_app.repository.ProductRepository;
 import com.rizvankarimov.cie_app.repository.UserRepository;
 import com.rizvankarimov.cie_app.repository.UserServiceRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +18,10 @@ import java.util.Optional;
 public class UserItemsImpl implements UserItems
 {
     private final UserRepository userRepository;
-    private final ServiceRepository serviceRepository;
+    private final ProductRepository productRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserServiceRepository userServiceRepository;
     private final CompanyRepository companyRepository;
-
 
 
     public void createAdminUser() {
@@ -35,19 +34,19 @@ public class UserItemsImpl implements UserItems
         userRepository.save(adminUser);
     }
 
-    @Override
-    public void addService() {
 
-    }
-    @Override
     @Transactional
-    public void addService(My_Items myItems) {
-        serviceRepository.save(myItems);
+    public void addService(Products myItems) {
+        productRepository.save(myItems);
     }
 
     @Override
     public void addUserServices(UserItems userItems) {
+    }
 
+    @Override
+    public void addProducts(Products products) {
+        productRepository.save(products);
     }
 
     @Override
@@ -78,11 +77,30 @@ public class UserItemsImpl implements UserItems
         userRepository.save(user);
     }
 
+
+
     @Override
-    public Optional<User> findByUsername(String username)
-    {
-        return userRepository.findByUsername(username);
+    public Optional<User> findByUsername(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isPresent()) {
+            return user;
+        } else {
+            Optional<Company> company = companyRepository.findByUsername(username);
+            if (company.isPresent()) {
+                User convertedUser = new User();
+                convertedUser.setId(company.get().getId());
+                convertedUser.setUsername(company.get().getUsername());
+                convertedUser.setPassword(company.get().getPassword());
+                return Optional.of(convertedUser);
+            } else {
+                return Optional.empty();
+            }
+        }
     }
+
+
+
+
 
 
     @Override
@@ -104,18 +122,18 @@ public class UserItemsImpl implements UserItems
     }
 
     @Override
-    public List<My_Items> getAllServices() {
-        return serviceRepository.findAll();
+    public List<Products> getAllProducts() {
+        return productRepository.findAll();
     }
 
     @Override
-    public My_Items getServiceById(Long id) {
-        return serviceRepository.findById(id).get();
+    public Products getProductById(Long id) {
+        return productRepository.findById(id).get();
     }
 
     @Override
-    public Object updateService(Long id) {
-     return serviceRepository.findById(id).get();
+    public Object updateProducts(Long id) {
+     return productRepository.findById(id).get();
     }
 
 }

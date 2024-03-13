@@ -51,10 +51,8 @@ public class SecurityConfig
 
         http.authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers("/api/authentication/**").permitAll() //worked
-                                .requestMatchers("/api/services/**").authenticated() //worked
-                                .requestMatchers("/api/users/authUser").authenticated() //worked
-                                .requestMatchers("/api/users/allUsers").permitAll() //worked
+                                .requestMatchers("/api/authentication/**").permitAll()
+                                .requestMatchers("/api/products/**").authenticated()
 
                                 .anyRequest().authenticated()
                 )
@@ -96,6 +94,9 @@ public class SecurityConfig
         authProvider.setPostAuthenticationChecks((user) -> {
             System.out.println("User successfully authenticated: " + user.getUsername());
         });
+        authProvider.setPostAuthenticationChecks((company)->{
+            System.out.println("Company successfully authenticated: " + company.getUsername());
+        });
         return authProvider;
     }
 
@@ -130,16 +131,5 @@ public class SecurityConfig
         return source;
     }
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.applyPermitDefaultValues();
-//        configuration.addAllowedOrigin("*"); // Tüm kaynaklardan gelen isteklere izin ver
-//        configuration.addAllowedMethod("*"); // Tüm HTTP yöntemlerine izin ver (GET, POST, PUT, DELETE)
-//        configuration.addAllowedHeader("*"); // Tüm başlıklara izin ver
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
 
 }

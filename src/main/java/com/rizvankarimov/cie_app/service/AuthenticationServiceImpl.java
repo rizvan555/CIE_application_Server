@@ -13,45 +13,44 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationServiceImpl implements AuthenticationService
-{
+public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtProvider jwtProvider;
     private final AuthenticationManager authenticationManager;
     private final JwtRefreshTokenService jwtRefreshTokenService;
     private final UserRepository userRepository;
 
-
     @Override
-    public User signInAndReturnJWT(User signInRequest)
-    {
+    public Object signInAndReturnJWT(Object signInRequest) {
+        if (signInRequest instanceof User) {
+            return signInAndReturnJWT((User) signInRequest);
+        } else if (signInRequest instanceof Company) {
+            return signInAndReturnJWT((Company) signInRequest);
+        } else {
+            throw new RuntimeException("Geçersiz nesne türü girişi");
+        }
+    }
+
+    public User signInAndReturnJWT(User signInRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signInRequest.getUsername(), signInRequest.getPassword())
         );
-
         com.rizvankarimov.cie_app.security.UserPrincipal userPrincipal = (com.rizvankarimov.cie_app.security.UserPrincipal) authentication.getPrincipal();
         String jwt = jwtProvider.generateToken(userPrincipal);
-
         User signInUser = userPrincipal.getUser();
         signInUser.setAccessToken(jwt);
         signInUser.setRefreshToken(jwtRefreshTokenService.createRefreshToken(signInUser.getId()).getTokenId());
-
         return signInUser;
     }
 
-    @Override
-    public Company signInAndReturnJWT(Company signInRequest)
-    {
+    public Company signInAndReturnJWT(Company signInRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signInRequest.getUsername(), signInRequest.getPassword())
         );
-
         com.rizvankarimov.cie_app.security.CompanyPrincipal companyPrincipal = (CompanyPrincipal) authentication.getPrincipal();
         String jwt = jwtProvider.generateTokenCompany(companyPrincipal);
-
         Company signInCompany = companyPrincipal.getCompany();
         signInCompany.setAccessToken(jwt);
         signInCompany.setRefreshToken(jwtRefreshTokenService.createRefreshToken(signInCompany.getId()).getTokenId());
-
         return signInCompany;
     }
 
@@ -60,5 +59,4 @@ public class AuthenticationServiceImpl implements AuthenticationService
     public Object findUserById(long id) {
         return userRepository.findById(id).orElse(null);
     }
-
 }
