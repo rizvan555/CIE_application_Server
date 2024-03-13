@@ -8,6 +8,7 @@ import lombok.Data;
 @Table(name = "products")
 public class Products {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "company", nullable = false)
@@ -22,7 +23,7 @@ public class Products {
     @Column(name = "weight", nullable = false)
     private double weight;
 
-    @Column(name = "image", nullable = false)
+    @Column(name = "image", nullable = false,length = 1000)
     private String image;
 
     @Column(name = "halal", nullable = false)

@@ -1,56 +1,25 @@
 package com.rizvankarimov.cie_app.security;
 
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Component;
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class ProductsPrincipal implements UserDetails {
-    private Long id;
-    private String company;
-    private String brand;
-    private String model;
-    private String weight;
-    private String image;
-    private String halal;
-    private String vegan;
-    private String vegetarian;
-    private String alcohol;
-    private String allergic;
-    private Set<GrantedAuthority> authorities;
+@Component
+public class ProductsPrincipal implements AuthenticationProvider {
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Override
-    public String getPassword() {
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         return null;
     }
 
     @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
+    public boolean supports(Class<?> authentication) {
+        return true;
     }
 }
