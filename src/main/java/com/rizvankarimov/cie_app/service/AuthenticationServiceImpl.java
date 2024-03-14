@@ -19,16 +19,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtRefreshTokenService jwtRefreshTokenService;
     private final UserRepository userRepository;
 
-    @Override
-    public Object signInAndReturnJWT(Object signInRequest) {
-        if (signInRequest instanceof User) {
-            return signInAndReturnJWT((User) signInRequest);
-        } else if (signInRequest instanceof Company) {
-            return signInAndReturnJWT((Company) signInRequest);
-        } else {
-            throw new RuntimeException("Geçersiz nesne türü girişi");
-        }
-    }
 
     public User signInAndReturnJWT(User signInRequest) {
         Authentication authentication = authenticationManager.authenticate(
@@ -42,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return signInUser;
     }
 
-    public Company signInAndReturnJWT(Company signInRequest) {
+    public Company signInAndReturnCompanyJWT(Company signInRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signInRequest.getUsername(), signInRequest.getPassword())
         );

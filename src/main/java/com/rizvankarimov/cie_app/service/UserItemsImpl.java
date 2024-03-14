@@ -68,7 +68,6 @@ public class UserItemsImpl implements UserItems
     public Company saveCompany(Company company) {
         company.setPassword(passwordEncoder.encode(company.getPassword()));
         company.setCreateTime(LocalDateTime.now());
-
         return companyRepository.save(company);
     }
 
@@ -76,7 +75,6 @@ public class UserItemsImpl implements UserItems
     public void updateUser(User user) {
         userRepository.save(user);
     }
-
 
 
     @Override
@@ -133,4 +131,8 @@ public class UserItemsImpl implements UserItems
      return productRepository.findById(id).get();
     }
 
+    @Override
+    public void getAllProducts(Products products) {
+        productRepository.save(products);
+    }
 }

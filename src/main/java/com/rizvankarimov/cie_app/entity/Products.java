@@ -23,7 +23,7 @@ public class Products {
     @Column(name = "weight", nullable = false)
     private double weight;
 
-    @Column(name = "image", nullable = false,length = 1000)
+    @Column(name = "image", nullable = false,length = 100000)
     private String image;
 
     @Column(name = "halal", nullable = false)

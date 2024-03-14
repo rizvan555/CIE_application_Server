@@ -37,13 +37,13 @@ public class AuthenticationController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<?> login(@RequestBody User user) {
+    public ResponseEntity<User> login(@RequestBody User user) {
         return new ResponseEntity<>(authenticationService.signInAndReturnJWT(user), HttpStatus.OK);
     }
 
     @PostMapping("login_companies")
-    public ResponseEntity<?> loginCompanies(@RequestBody Company company) {
-        return new ResponseEntity<>(authenticationService.signInAndReturnJWT(company), HttpStatus.OK);
+    public ResponseEntity<Company> loginCompanies(@RequestBody Company company) {
+        return new ResponseEntity<>(authenticationService.signInAndReturnCompanyJWT(company), HttpStatus.OK);
     }
 
     @PostMapping("refresh-token")

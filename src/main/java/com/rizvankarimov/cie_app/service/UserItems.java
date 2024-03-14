@@ -31,6 +31,7 @@ public interface UserItems {
 
     Optional<User> findByUsername(String username);
 
+
     void changeRole(Role newRole, String username);
 
     List<User> findAllUsers();
@@ -42,4 +43,7 @@ public interface UserItems {
     Products getProductById(Long id);
 
     Object updateProducts(Long id);
+
+    void getAllProducts(Products products);
+
 }

@@ -40,4 +40,16 @@ public class ProductsController {
             return ResponseEntity.ok("The product was added successfully.");
         }
     }
+
+    @GetMapping("/api/products/getAllProducts")
+    public ResponseEntity<Iterable<Products>> getAllProducts() {
+        return ResponseEntity.ok(productRepository.findAll());
+    }
+
+
+    @GetMapping("/api/products/getProducts/{id}")
+    public ResponseEntity<Products> getProducts(@PathVariable Long id) {
+        Optional<Products> productOptional = productRepository.findById(id);
+        return productOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
+    }
 }
