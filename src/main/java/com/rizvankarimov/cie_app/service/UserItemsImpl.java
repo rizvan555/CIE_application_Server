@@ -100,9 +100,6 @@ public class UserItemsImpl implements UserItems
 
 
 
-
-
-
     @Override
     @Transactional
     public void changeRole(Role newRole, String username)

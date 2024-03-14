@@ -1,65 +1,18 @@
 package com.rizvankarimov.cie_app.security;
 
 import com.rizvankarimov.cie_app.entity.Company;
-import lombok.*;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
-import java.util.Set;
 
-    @Setter
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public class CompanyPrincipal implements UserDetails {
-        private Long id;
-        private String username;
-        private String password;
-        private String phone;
-        private String company_name;
-        private Company company;
-        private String address;
-        private String email;
-        private String accessToken;
-        private Set<GrantedAuthority> authorities;
+@Getter
+public class CompanyPrincipal extends User {
+    private final Company company;
 
-        public CompanyPrincipal(Company testUser) {
-        }
-
-        @Override
-        public Collection<? extends GrantedAuthority> getAuthorities() {
-            return authorities;
-        }
-
-        @Override
-        public String getUsername() {
-            return username;
-        }
-
-        @Override
-        public String getPassword() {
-            return password;
-        }
-
-        @Override
-        public boolean isAccountNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isAccountNonLocked() {
-            return true;
-        }
-
-        @Override
-        public boolean isCredentialsNonExpired() {
-            return true;
-        }
-
-        @Override
-        public boolean isEnabled() {
-            return true;
-        }
+    public CompanyPrincipal(String username, String password, Collection<? extends GrantedAuthority> authorities, Company company) {
+        super(username, password, authorities);
+        this.company = company;
     }
+}
